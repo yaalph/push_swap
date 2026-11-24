@@ -6,7 +6,7 @@
 /*   By: kal-bagh <kal-bagh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/21 18:39:39 by kal-bagh          #+#    #+#             */
-/*   Updated: 2026/11/23 09:30:31 by kal-bagh         ###   ########.fr       */
+/*   Updated: 2026/11/24 10:06:23 by kal-bagh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,87 @@ void free_words(char **words){
 
 
 
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n && s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	if (i == n)
+		return (0);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+
+void ft_putstr(char *s){
+    while(*s){
+        write(1, s, ft_strlen(s));
+        s++;
+    }
+}
+
+void print_float(float n){
+    
+}
+
+void first_upper(char *s){
+    char c = *s - ('a' - 'A');
+    write(1, &c, 1);
+    ft_putstr(s + 1);
+}
+
+void print_strategy(char *s, char c){
+
+    first_upper(s);
+    
+    if(ft_strncmp(s, "adaptive", ft_strlen("adaptive") == 0)){
+        if(c == 's')
+            ft_putstr(" / O(n²)\n");
+        else if(c == 'c')
+            ft_putstr(" / O(n√n)\n");
+        else if(c == 'm')
+            ft_putstr(" / O(n log n)\n");
+    }
+    else if(ft_strncmp(s, "simple", ft_strlen("simple") == 0))
+        ft_putstr(" / O(n²)\n");
+
+    else if(ft_strncmp(s, "medium", ft_strlen("medium") == 0))
+        ft_putstr(" / O(n²)\n");
+
+    else if(ft_strncmp(s, "complex", ft_strlen("complex") == 0))
+        ft_putstr(" / O(n²)\n");
+}
+
+void bench_stats(float disorder, char *strategy, t_opcount opcount){
+    ft_putstr("[bench] disorder: ");
+    print_float(disorder);
+    ft_putstr("%\n");
+    ft_putstr("[bench] strategy: ");
+    
+}
+
+
+int parse_flags(char **av, t_stack **a, t_stack **b){
+    int flags = 0;
+    while(av[flags] && ft_strncmp(av[flags], "--", 2) == 0)
+        flags++;
+
+    if(flags > 2 || (flags == 2 &&
+    (ft_strncmp(av[0], "--bench", ft_strlen("--bench") + 1)
+    && ft_strncmp(av[1], "--bench", ft_strlen("--bench") + 1))))
+            error_handler(a, b, 0, NULL);
+    int i_comp = 0;
+    if(flags == 2 && ft_strncmp(av[0], "--bench", ft_strlen("--bench") + 1) == 0)
+        i_comp = 1;
+
+    if(ft_strncmp(av[0], "--simple", ft_strlen("--simple") + 1) == 0)
+
+}
+
+
+
 void parser(char **av, t_stack **a, t_stack **b){
     char **sub_args;
     while(*(++av)){
@@ -136,126 +217,3 @@ void parser(char **av, t_stack **a, t_stack **b){
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// int	ft_strncmp(const char *s1, const char *s2, size_t n)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (i < n && s1[i] && s2[i] && s1[i] == s2[i])
-// 		i++;
-// 	if (i == n)
-// 		return (0);
-// 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-// }
-
-
-// void ft_putstr(char *s){
-//     while(*s){
-//         write(1, s, ft_strlen(s));
-//         s++;
-//     }
-// }
-
-// void print_float(float n){
-    
-// }
-
-// void first_upper(char *s){
-//     char c = *s - ('a' - 'A');
-//     write(1, &c, 1);
-//     ft_putstr(s + 1);
-// }
-
-// void print_complexity(char *s){
-//     if(ft_strncmp(s, "adaptive", ft_strlen("adaptive") == 0)){
-//         first_upper(s);
-//         ft_putstr(" / O(n√n)\n");
-//     }
-//     else if(ft_strncmp(s, "simple", ft_strlen("simple") == 0)){
-//         write(1, "S", 1);
-//         ft_putstr(s + 1);
-//         ft_putstr(" / O(n²)\n");
-//     }
-//     else if(ft_strncmp(s, "medium", ft_strlen("medium") == 0)){
-//         write(1, "S", 1);
-//         ft_putstr(strategy + 1);
-//         ft_putstr(" / O(n²)\n");
-//     }
-//     else if(ft_strncmp(s, "complex", ft_strlen("complex") == 0)){
-//         ft_putstr(" / O(n²)\n");
-//     }    
-// }
-
-// void bench_stats(float disorder, char *strategy, t_opcount opcount, char *adp){
-//     ft_putstr("[bench] disorder: ");
-//     print_float(disorder);
-//     ft_putstr("%\n");
-//     ft_putstr("[bench] strategy: ");
-//     ft_putstr(strategy);
-//     if(ft_strncmp(strategy, "adaptive", ft_strlen("adaptive") == 0)){
-//         first_upper(adp);
-//         ft_putstr(" / O(n√n)\n");
-//     }
-//     else if(ft_strncmp(strategy, "simple", ft_strlen("simple") == 0)){
-//         write(1, "S", 1);
-//         ft_putstr(strategy + 1);
-//         ft_putstr(" / O(n²)\n");
-//     }
-//     else if(ft_strncmp(strategy, "medium", ft_strlen("medium") == 0)){
-//         write(1, "S", 1);
-//         ft_putstr(strategy + 1);
-//         ft_putstr(" / O(n²)\n");
-//     }
-//     else if(ft_strncmp(strategy, "complex", ft_strlen("complex") == 0)){
-//         write(1, "S", 1);
-//         ft_putstr(strategy + 1);
-//         ft_putstr(" / O(n²)\n");
-//     }
-// }
-
-
-// int parse_flags(char **av, t_stack **a, t_stack **b){
-//     int flags = 0;
-//     while(av[flags] && ft_strncmp(av[flags], "--", 2) == 0)
-//         flags++;
-
-//     if(flags > 2 || (flags == 2 &&
-//     (ft_strncmp(av[0], "--bench", ft_strlen("--bench") + 1)
-//     && ft_strncmp(av[1], "--bench", ft_strlen("--bench") + 1))))
-//             error_handler(a, b, 0, NULL);
-//     int i_comp = 0;
-//     if(flags == 2 && ft_strncmp(av[0], "--bench", ft_strlen("--bench") + 1) == 0)
-//         i_comp = 1;
-
-//     if(ft_strncmp(av[0], "--simple", ft_strlen("--simple") + 1) == 0)
-
-// }
